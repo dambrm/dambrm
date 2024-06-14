@@ -1,0 +1,23 @@
+import pandas as pd
+import os
+
+# Specifica la cartella dove si trovano i file Excel
+cartella = '/content/hpv'
+
+# Crea una lista per memorizzare i dataframes
+dataframes = []
+
+# Legge ogni file Excel nella cartella
+for filename in os.listdir(cartella):
+    if filename.endswith('.xlsx') or filename.endswith('.xls'):
+        file_path = os.path.join(cartella, filename)
+        df = pd.read_excel(file_path)
+        dataframes.append(df)
+
+# Combina tutti i dataframes in uno solo
+df_combinato = pd.concat(dataframes, ignore_index=True)
+
+# Salva il dataframe combinato in un nuovo file Excel
+df_combinato.to_excel('/content/hpv/combined.xlsx', index=False)
+
+print('I file sono stati combinati con successo.')
